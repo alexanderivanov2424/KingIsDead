@@ -30,7 +30,7 @@ def runDFS(s): #return next states, next actions to take, final winner
                 actions_to_loss = [next.action]
             continue
 
-        states, actions, future_winner = getBestAction(next)
+        states, actions, future_winner = runDFS(next)
 
         if future_winner == current_player:
             return [next] + states, [next.action] + actions, current_player
