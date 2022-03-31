@@ -92,7 +92,7 @@ PRINT_TEXT = """
     (a,b,c)   #               _\  {val_7}    _ _ _ /        _ _  # Turn
 a - ENGLISH   #       _ _ _ /          _ _ /          _ _ /      #   {turn}
 b - SCOTTISH  #     / _ _ _ _ _ _ _ _/      _| \_ _ / FRANCE     # Last Played
-c - WELSH     #                              \        {f}       #   {last_play}
+c - WELSH     #                              \        {f}        #   {last_play}
 ################################################################################
      PLAYER 1          {crt_1}        #     PLAYER 2          {crt_2}
                                       #
