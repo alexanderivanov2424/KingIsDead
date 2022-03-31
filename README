@@ -1,0 +1,42 @@
+
+THE KING IS DEAD
+
+#############################################
+
+A simulator for the board game "The King is Dead".
+Author: Alexander Ivanov
+
+
+Create Game State with some initialization:
+s = GameState()
+
+Create Game State corresponding to the start of a new random game:
+s = GameState(rand_init = True)
+
+Random initialization can be seeded with:
+import np
+np.random.seed(0)
+
+#############################################
+
+Files:
+
+Constants.py
+ - Stores all constants used for code readability and printing
+
+GameState.py:
+  - GameState class
+    - Holds the state of the game
+    - can be initialized randomly (useful for setting up real world games)
+    - get_next_states(s), finds all possible states after a player takes a turn
+    - whoIsWinner(s), check win conditions and finds winner
+
+Actions.py
+  - Action classes
+    - Represent all actions that can be taken in game for printing.
+
+search.py
+ - runDFS(s), runs deapth first search to get the outcome of the game and the states, actions to reach it
+
+ main.py
+  - example state setup from real game played
