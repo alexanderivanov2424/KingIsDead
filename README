@@ -28,6 +28,7 @@ GameState.py:
   - GameState class
     - Holds the state of the game
     - can be initialized randomly (useful for setting up real world games)
+    - correctSupply(), corrects the supply based on regions and player courts
     - get_next_states(s), finds all possible states after a player takes a turn
     - whoIsWinner(s), check win conditions and finds winner
     - winStats(s), gets winner, win type, and coronation rankings for a win state
