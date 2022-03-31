@@ -2,7 +2,7 @@ import numpy as np
 
 from GameState import *
 from Constants import *
-from search import runDFS
+from search import runDFS, runRandomDFS
 
 
 s = GameState()
@@ -54,16 +54,20 @@ s.player_followers[PLAYER_2,WELSH] = 1
 
 print(s)
 
-states, actions, winner = runDFS(s)
+# s = GameState(rand_init=True)
+# states, actions, winner = runDFS(s)
+states, actions, winner = runRandomDFS(s, branching=10)
+
+print(f"Winner will be {'Player 1' if winner == PLAYER_1 else 'player 2'}")
 
 for s,a in zip(states, actions):
     print(a)
     print(s)
-    print(f"Winner will be {'Player 1' if winner == PLAYER_1 else 'player 2'}")
 
 
-if isEndGameState(s):
-    stats = winStats(s)
-    print(REGION_NAMES)
-    print([FACTION_NAMES[int(i)] for i in s.resolved_regions])
-    print(stats)
+
+assert(isEndGameState(s))
+winner, win_type, coronation_rankings = winStats(s)
+print(win_type)
+print(" ".join(coronation_rankings))
+print(f"Winner: {'Player 1' if winner == PLAYER_1 else 'player 2'}")

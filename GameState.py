@@ -146,7 +146,7 @@ class GameState:
                 p1_cards.append(CARD_NAMES[i])
             elif self.player_cards[PLAYER_1,i] > 0:
                 p1_cards.append(CARD_NAMES[i] + "     x" + str(self.player_cards[PLAYER_1,i]))
-        p1_cards.extend(["" for _ in range(7 - len(p1_cards))])
+
 
         p2_cards = []
         for i in range(7):
@@ -154,7 +154,10 @@ class GameState:
                 p2_cards.append(CARD_NAMES[i])
             elif self.player_cards[PLAYER_2,i] > 0:
                 p2_cards.append(CARD_NAMES[i] + "     x" + str(self.player_cards[PLAYER_2,i]))
-        p2_cards.extend(["" for _ in range(7 - len(p2_cards))])
+
+        N = max(len(p1_cards), len(p2_cards))
+        p1_cards.extend(["" for _ in range(N - len(p1_cards))])
+        p2_cards.extend(["" for _ in range(N - len(p2_cards))])
 
         for card_p1, card_p2 in zip(p1_cards, p2_cards):
             r += f"{'    ' + card_p1 + ' '*(34 - len(card_p1))}#{'    ' + card_p2 + ' '*(38 - len(card_p2))}\n"
@@ -635,19 +638,25 @@ def whoIsWinner(s):
 def winStats(s):
     assert(isEndGameState(s))
 
+    winner = None
+    win_type = None
+    coronation_rankings = None
+
     if np.sum(s.resolved_regions == FRENCH) == 3:
         # Invasion
+        win_type = "Invasion"
         p1_sets = np.min(s.player_followers[PLAYER_1])
         p2_sets = np.min(s.player_followers[PLAYER_2])
         if p1_sets > p2_sets:
-            return PLAYER_1, "Invasion"
+            winner = PLAYER_1
         elif p2_sets > p1_sets:
-            return PLAYER_2, "Invasion"
+            winner = PLAYER_2
         else:
-            return s.last_to_play, "Invasion"
+            winner = s.last_to_play
 
     else:
         #coronation
+        win_type = "Coronation"
         English_control = np.sum(s.resolved_regions == ENGLISH)
         Scottish_control = np.sum(s.resolved_regions == SCOTTISH)
         Welsh_control = np.sum(s.resolved_regions == WELSH)
@@ -668,14 +677,18 @@ def winStats(s):
 
         faction1, faction2, faction3 = C[0][0], C[1][0], C[2][0]
 
+        coronation_rankings = (FACTION_NAMES[faction1], FACTION_NAMES[faction2], FACTION_NAMES[faction3])
+
         if s.player_followers[PLAYER_1,faction1] > s.player_followers[PLAYER_2,faction1]:
-            return PLAYER_1, FACTION_NAMES[faction1], FACTION_NAMES[faction2], FACTION_NAMES[faction3]
+            winner = PLAYER_1
         elif s.player_followers[PLAYER_1,faction1] < s.player_followers[PLAYER_2,faction1]:
-            return PLAYER_2, FACTION_NAMES[faction1], FACTION_NAMES[faction2], FACTION_NAMES[faction3]
+            winner = PLAYER_2
         else:
             if s.player_followers[PLAYER_1,faction2] > s.player_followers[PLAYER_2,faction2]:
-                return PLAYER_1, FACTION_NAMES[faction1], FACTION_NAMES[faction2], FACTION_NAMES[faction3]
+                winner = PLAYER_1
             elif s.player_followers[PLAYER_1,faction2] < s.player_followers[PLAYER_2,faction2]:
-                return PLAYER_2, FACTION_NAMES[faction1], FACTION_NAMES[faction2], FACTION_NAMES[faction3]
+                winner = PLAYER_2
             else:
-                return (PLAYER_1 + PLAYER_2) - s.last_to_play, FACTION_NAMES[faction1], FACTION_NAMES[faction2], FACTION_NAMES[faction3]
+                winner =  (PLAYER_1 + PLAYER_2) - s.last_to_play
+                
+    return winner, win_type, coronation_rankings

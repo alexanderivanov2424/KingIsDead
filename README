@@ -30,13 +30,15 @@ GameState.py:
     - can be initialized randomly (useful for setting up real world games)
     - get_next_states(s), finds all possible states after a player takes a turn
     - whoIsWinner(s), check win conditions and finds winner
+    - winStats(s), gets winner, win type, and coronation rankings for a win state
 
 Actions.py
   - Action classes
     - Represent all actions that can be taken in game for printing.
 
 search.py
- - runDFS(s), runs deapth first search to get the outcome of the game and the states, actions to reach it
+ - runDFS(s), runs depth first search to get the outcome of the game and the states, actions to reach it
+ - runRandomDFS(s, branching), runs depth first search with a limit to the branching factors
 
  main.py
   - example state setup from real game played

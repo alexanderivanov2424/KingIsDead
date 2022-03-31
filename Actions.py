@@ -5,7 +5,7 @@ class Action:
         self.summon_region = None
         self.summon = None
     def __str__(self):
-        return f"Summon {FACTION_NAMES[self.summon]} from {REGION_NAMES[self.summon_region]}"
+        return f"Summon {FACTION_NAMES[self.summon]} from {REGION_NAMES[self.summon_region]}\n"
 
 class ActionEnglishSupport(Action):
     def __init__(self, region, amount):
