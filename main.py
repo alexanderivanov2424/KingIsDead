@@ -28,9 +28,6 @@ s.resolved_regions[WARWICK] = ENGLISH
 s.resolved_regions[GWYNEDD] = WELSH
 s.resolved_regions[DEVON] = ENGLISH
 
-s.supply[ENGLISH] = 10 # didn't actually matter how many of each there were for this game so setting to 10
-s.supply[SCOTTISH] = 10
-s.supply[WELSH] = 10
 
 s.player_turn = PLAYER_1
 s.last_to_play = PLAYER_2
@@ -51,6 +48,8 @@ s.player_followers[PLAYER_1,WELSH] = 3
 s.player_followers[PLAYER_2,ENGLISH] = 5
 s.player_followers[PLAYER_2,SCOTTISH] = 1
 s.player_followers[PLAYER_2,WELSH] = 1
+
+s.correctSupply();
 
 print(s)
 

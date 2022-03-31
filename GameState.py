@@ -68,6 +68,10 @@ class GameState:
                 else:
                     self.supply[followers[i]] += 1
 
+    def correctSupply(self):
+        self.supply[ENGLISH] = 16 - np.sum(self.regions[:,ENGLISH]) - np.sum(self.player_followers[:,ENGLISH])
+        self.supply[SCOTTISH] = 16 - np.sum(self.regions[:,SCOTTISH]) - np.sum(self.player_followers[:,SCOTTISH])
+        self.supply[WELSH] = 16 - np.sum(self.regions[:,WELSH]) - np.sum(self.player_followers[:,WELSH])
 
     def copy(self):
         s = GameState()
@@ -690,5 +694,5 @@ def winStats(s):
                 winner = PLAYER_2
             else:
                 winner =  (PLAYER_1 + PLAYER_2) - s.last_to_play
-                
+
     return winner, win_type, coronation_rankings
